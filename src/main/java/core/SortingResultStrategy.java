@@ -1,10 +1,9 @@
 package core;
 
-import core.model.MatchResult;
+import core.model.MatchInfo;
 
 import java.util.List;
 
 public interface SortingResultStrategy {
-    List<MatchResult> sortMatches(List<MatchResult> matchResults);
-
+    List<MatchInfo> sortMatches(List<MatchInfo> matchInfo);
 }
