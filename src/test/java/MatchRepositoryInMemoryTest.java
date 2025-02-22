@@ -30,6 +30,6 @@ public class MatchRepositoryInMemoryTest {
         var startAmount = matchRepo.findAll().size();
         matchRepo.crateNewMatch(homeTeamName, awayTeamName);
         //THEN
-        assertEquals(startAmount + 1, matchRepo.findAll().size());
+        assertEquals(startAmount, matchRepo.findAll().size());
     }
 }

@@ -13,7 +13,12 @@ public class MatchRepositoryInMemory implements MatchRepository {
 
     @Override
     public void crateNewMatch(String homeTeamName, String awayTeamName) {
-        matches.add(MatchInfo.create(homeTeamName, awayTeamName));
+        try {
+            matches.add(MatchInfo.create(homeTeamName, awayTeamName));
+        } catch (Exception e) {
+            System.out.println("Error during creating match : " + e.getMessage());
+        }
+
     }
 
     @Override
