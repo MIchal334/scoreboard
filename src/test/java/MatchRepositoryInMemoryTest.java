@@ -62,7 +62,22 @@ public class MatchRepositoryInMemoryTest {
         matchRepo.crateNewMatch(homeTeamName, awayTeamName);
         matchRepo.crateNewMatch(homeTeamName, awayTeamName);
         //THEN
-        assertEquals(startAmount+1, matchRepo.findAll().size());
+        assertEquals(startAmount + 1, matchRepo.findAll().size());
+    }
+
+    @Test
+    public void testRemoveMatchHappyPath() {
+        //GIVEN
+        String homeTeamName = "homeTeamName";
+        String awayTeamName = "awayTeamName";
+        var matchRepo = new MatchRepositoryInMemory();
+        var matchInfo = matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+
+        // WHEN
+        var startAmount = matchRepo.findAll().size();
+        matchRepo.removeMatch(matchInfo.id());
+        //THEN
+        assertEquals(startAmount - 1, matchRepo.findAll().size());
     }
 
 
