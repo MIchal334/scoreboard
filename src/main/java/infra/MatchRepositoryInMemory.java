@@ -46,17 +46,22 @@ public class MatchRepositoryInMemory implements MatchRepository {
 
     @Override
     public void updateResult(String id, MatchResult newResult) {
-        MatchInfo info = findMatchById(id);
-        MatchInfo newInfo = info.withMatchResult(newResult);
-        removeMatch(id);
-        matches.add(newInfo);
+        try {
+            MatchInfo info = findMatchById(id);
+            MatchInfo newInfo = info.withMatchResult(newResult);
+            removeMatch(id);
+            matches.add(newInfo);
+        }catch (IllegalArgumentException e) {
+            System.out.println("Error during updating match : " + e.getMessage());
+        }
+
     }
 
 
     private MatchInfo findMatchById(String matchId) {
         return matches.stream().filter(match -> match.id().equals(matchId))
                 .findFirst().
-                orElseThrow(() -> new IllegalArgumentException("Match with id" + matchId + "  not found"));
+                orElseThrow(() -> new IllegalArgumentException("Match with id " + matchId + "  not found"));
     }
 
     private boolean checkIsTeamNameAlreadyExist(String teamName) {

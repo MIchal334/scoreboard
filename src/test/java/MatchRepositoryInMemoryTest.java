@@ -3,6 +3,9 @@ import core.model.MatchResult;
 import infra.MatchRepositoryInMemory;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchRepositoryInMemoryTest {
@@ -126,14 +129,12 @@ public class MatchRepositoryInMemoryTest {
         var newResult = new MatchResult(homeScore, awayScore);
 
         // WHEN
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        matchRepo.updateResult("id", newResult);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> matchRepo.updateResult("id", newResult)
-        );
-
-        // then
-        assertTrue(exception.getMessage().toLowerCase().contains("not found"));
+        //THEN
+        assertTrue(outContent.toString().toLowerCase().contains("not found"));
     }
 }
 
