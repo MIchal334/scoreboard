@@ -8,4 +8,6 @@ public interface MatchRepository {
     MatchInfo crateNewMatch(String homeTeamName, String awayTeamName);
 
     Collection<MatchInfo> findAll();
+
+    void removeMatch(String matchId);
 }

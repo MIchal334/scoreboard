@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+
 public class MatchRepositoryInMemory implements MatchRepository {
     private final List<MatchInfo> matches = new ArrayList<>();
 
@@ -33,6 +34,16 @@ public class MatchRepositoryInMemory implements MatchRepository {
         return matches;
     }
 
+    @Override
+    public void removeMatch(String matchId) {
+        MatchInfo info = findMatchById(matchId).get();
+        matches.remove(info);
+    }
+
+
+    private Optional<MatchInfo> findMatchById(String matchId) {
+        return matches.stream().filter(match -> match.id().equals(matchId)).findFirst();
+    }
 
     private boolean checkIsTeamNameAlreadyExist(String teamName) {
         return matches.stream()
