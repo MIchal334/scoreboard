@@ -136,6 +136,31 @@ public class MatchRepositoryInMemoryTest {
         //THEN
         assertTrue(outContent.toString().toLowerCase().contains("not found"));
     }
+
+
+    @Test
+    public void testUpdateMatchResultResultBelowZero() {
+        //GIVEN
+        String homeTeamName = "homeTeamName";
+        String awayTeamName = "awayTeamName";
+        int homeScoreFirst = 0;
+        int awayScoreFirst = 2;
+        int homeScoreSecond = -1;
+        int awayScoreSecond = 2;
+        var matchRepo = new MatchRepositoryInMemory();
+        var matchInfo = matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        var firstResult = new MatchResult(homeScoreFirst, awayScoreFirst);
+        var secondResult = new MatchResult(homeScoreSecond, awayScoreSecond);
+        // WHEN
+        matchRepo.updateResult(matchInfo.id(), firstResult);
+        matchRepo.updateResult(matchInfo.id(), secondResult);
+        var currentInfo = matchRepo.findAll().stream().filter(match -> match.id().equals(matchInfo.id())).findFirst().get();
+
+        //THEN
+        assertEquals(awayScoreFirst, currentInfo.matchResult().awayTeamScore());
+        assertEquals(homeScoreFirst, currentInfo.matchResult().homeTeamScore());
+    }
+
 }
 
 
