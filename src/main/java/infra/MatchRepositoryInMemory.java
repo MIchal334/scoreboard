@@ -14,8 +14,12 @@ public class MatchRepositoryInMemory implements MatchRepository {
     @Override
     public void crateNewMatch(String homeTeamName, String awayTeamName) {
         try {
-            matches.add(MatchInfo.create(homeTeamName, awayTeamName));
-        } catch (Exception e) {
+            if (checkIsTeamNameAlreadyExist(homeTeamName) || checkIsTeamNameAlreadyExist(awayTeamName)) {
+                throw new IllegalArgumentException("Team name already exist.");
+            }
+            MatchInfo match = MatchInfo.create(homeTeamName, awayTeamName);
+            matches.add(match);
+        } catch (IllegalArgumentException e) {
             System.out.println("Error during creating match : " + e.getMessage());
         }
 
@@ -24,5 +28,13 @@ public class MatchRepositoryInMemory implements MatchRepository {
     @Override
     public Collection<MatchInfo> findAll() {
         return matches;
+    }
+
+
+    private boolean checkIsTeamNameAlreadyExist(String teamName) {
+        return matches.stream()
+                .anyMatch(info ->
+                        info.homeTeamName().equals(teamName) || info.awayTeamName().equals(teamName)
+                );
     }
 }
