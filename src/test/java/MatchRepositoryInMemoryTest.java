@@ -18,4 +18,18 @@ public class MatchRepositoryInMemoryTest {
         //THEN
         assertEquals(startAmount + 1, matchRepo.findAll().size());
     }
+
+    @Test
+    public void testCreateNewMatchWithSameTeamName() {
+        //GIVEN
+        String homeTeamName = "homeTeamName ";
+        String awayTeamName = "homeTeamName";
+        var matchRepo = new MatchRepositoryInMemory();
+
+        // WHEN
+        var startAmount = matchRepo.findAll().size();
+        matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        //THEN
+        assertEquals(startAmount + 1, matchRepo.findAll().size());
+    }
 }
