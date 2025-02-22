@@ -34,6 +34,9 @@ public record MatchInfo(
     }
 
     public MatchInfo withMatchResult(MatchResult newMatchResult) {
-       return new MatchInfo(id, homeTeamName, awayTeamName, newMatchResult);
+        if (newMatchResult.awayTeamScore() < 0 || newMatchResult.homeTeamScore() < 0) {
+            throw new IllegalArgumentException("Result should be above 0");
+        }
+        return new MatchInfo(id, homeTeamName, awayTeamName, newMatchResult);
     }
 }

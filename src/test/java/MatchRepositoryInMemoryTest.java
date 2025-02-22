@@ -1,4 +1,3 @@
-import core.model.MatchInfo;
 import core.model.MatchResult;
 import infra.MatchRepositoryInMemory;
 import org.junit.jupiter.api.Test;
@@ -161,6 +160,23 @@ public class MatchRepositoryInMemoryTest {
         assertEquals(homeScoreFirst, currentInfo.matchResult().homeTeamScore());
     }
 
+    @Test
+    public void testFindAll() {
+        //GIVEN
+        String homeTeamName1 = "homeTeamName1";
+        String awayTeamName1 = "awayTeamName1";
+        String homeTeamName2 = "homeTeamName2";
+        String awayTeamName2 = "awayTeamName2";
+        var matchRepo = new MatchRepositoryInMemory();
+        matchRepo.crateNewMatch(homeTeamName1, awayTeamName1);
+        matchRepo.crateNewMatch(homeTeamName2, awayTeamName2);
+
+        // WHEN
+        var allMatches = matchRepo.findAll();
+
+        // THEN
+        assertEquals(2, allMatches.size());
+    }
 }
 
 
