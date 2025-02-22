@@ -113,8 +113,8 @@ public class MatchRepositoryInMemoryTest {
         var currentInfo = matchRepo.findAll().stream().filter(match -> match.id().equals(matchInfo.id())).findFirst().get();
 
         //THEN
-        assertEquals(currentInfo.matchResult().awayTeamScore(), awayScore);
-        assertEquals(currentInfo.matchResult().homeTeamScore(), homeScore);
+        assertEquals(awayScore, currentInfo.matchResult().awayTeamScore());
+        assertEquals(homeScore, currentInfo.matchResult().homeTeamScore());
     }
 
 

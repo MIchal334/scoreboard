@@ -2,11 +2,11 @@ package infra;
 
 import core.MatchRepository;
 import core.model.MatchInfo;
+import core.model.MatchResult;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 
 public class MatchRepositoryInMemory implements MatchRepository {
@@ -42,6 +42,14 @@ public class MatchRepositoryInMemory implements MatchRepository {
         } catch (IllegalArgumentException e) {
             System.out.println("Error during removing match : " + e.getMessage());
         }
+    }
+
+    @Override
+    public void updateResult(String id, MatchResult newResult) {
+        MatchInfo info = findMatchById(id);
+        MatchInfo newInfo = info.withMatchResult(newResult);
+        removeMatch(id);
+        matches.add(newInfo);
     }
 
 

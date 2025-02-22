@@ -28,9 +28,12 @@ public record MatchInfo(
             );
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
-                    "Creating match is impossible" + e.getMessage(),
-                    e
+                    "Creating match is impossible" + e.getMessage()
             );
         }
+    }
+
+    public MatchInfo withMatchResult(MatchResult newMatchResult) {
+       return new MatchInfo(id, homeTeamName, awayTeamName, newMatchResult);
     }
 }
