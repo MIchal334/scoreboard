@@ -8,7 +8,7 @@ public class MatchRepositoryInMemoryTest {
     @Test
     public void testCreateNewMatchHappyPath() {
         //GIVEN
-        String homeTeamName = "homeTeamName ";
+        String homeTeamName = "homeTeamName";
         String awayTeamName = "awayTeamName";
         var matchRepo = new MatchRepositoryInMemory();
 
@@ -22,8 +22,23 @@ public class MatchRepositoryInMemoryTest {
     @Test
     public void testCreateNewMatchWithSameTeamName() {
         //GIVEN
-        String homeTeamName = "homeTeamName ";
+        String homeTeamName = "homeTeamName";
         String awayTeamName = "homeTeamName";
+        var matchRepo = new MatchRepositoryInMemory();
+
+        // WHEN
+        var startAmount = matchRepo.findAll().size();
+        matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        //THEN
+        assertEquals(startAmount, matchRepo.findAll().size());
+    }
+
+
+    @Test
+    public void testCreateNewMatchWithNullTeamName() {
+        //GIVEN
+        String homeTeamName = null;
+        String awayTeamName = null;
         var matchRepo = new MatchRepositoryInMemory();
 
         // WHEN
