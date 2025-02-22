@@ -1,4 +1,5 @@
 import core.model.MatchInfo;
+import core.model.MatchResult;
 import infra.MatchRepositoryInMemory;
 import org.junit.jupiter.api.Test;
 
@@ -93,6 +94,27 @@ public class MatchRepositoryInMemoryTest {
         matchRepo.removeMatch("notExistingMatchId");
         //THEN
         assertEquals(startAmount, matchRepo.findAll().size());
+    }
+
+
+    @Test
+    public void testUpdateMatchResultHappyPath() {
+        //GIVEN
+        String homeTeamName = "homeTeamName";
+        String awayTeamName = "awayTeamName";
+        int homeScore = 1;
+        int awayScore = 1;
+        var matchRepo = new MatchRepositoryInMemory();
+        var matchInfo = matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        var newResult = new MatchResult(homeScore, awayScore);
+
+        // WHEN
+        matchRepo.updateResult(matchInfo.id(), newResult);
+        var currentInfo = matchRepo.findAll().stream().filter(match -> match.id().equals(matchInfo.id())).findFirst().get();
+
+        //THEN
+        assertEquals(currentInfo.matchResult().awayTeamScore(), awayScore);
+        assertEquals(currentInfo.matchResult().homeTeamScore(), homeScore);
     }
 
 
