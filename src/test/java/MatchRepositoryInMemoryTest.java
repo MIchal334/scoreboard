@@ -80,6 +80,21 @@ public class MatchRepositoryInMemoryTest {
         assertEquals(startAmount - 1, matchRepo.findAll().size());
     }
 
+    @Test
+    public void testRemoveMatchWithNotExistingMatchId() {
+        //GIVEN
+        String homeTeamName = "homeTeamName";
+        String awayTeamName = "awayTeamName";
+        var matchRepo = new MatchRepositoryInMemory();
+        var matchInfo = matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+
+        // WHEN
+        var startAmount = matchRepo.findAll().size();
+        matchRepo.removeMatch("notExistingMatchId");
+        //THEN
+        assertEquals(startAmount, matchRepo.findAll().size());
+    }
+
 
 }
 
