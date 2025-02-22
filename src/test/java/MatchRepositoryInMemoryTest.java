@@ -3,8 +3,7 @@ import core.model.MatchResult;
 import infra.MatchRepositoryInMemory;
 import org.junit.jupiter.api.Test;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchRepositoryInMemoryTest {
     @Test
@@ -118,6 +117,24 @@ public class MatchRepositoryInMemoryTest {
     }
 
 
+    @Test
+    public void testUpdateWithNotExistingMatchId() {
+        //GIVEN
+        int homeScore = 1;
+        int awayScore = 1;
+        var matchRepo = new MatchRepositoryInMemory();
+        var newResult = new MatchResult(homeScore, awayScore);
+
+        // WHEN
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> matchRepo.updateResult("id", newResult)
+        );
+
+        // then
+        assertTrue(exception.getMessage().toLowerCase().contains("not found"));
+    }
 }
 
 

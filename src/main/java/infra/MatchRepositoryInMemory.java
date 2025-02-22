@@ -56,7 +56,7 @@ public class MatchRepositoryInMemory implements MatchRepository {
     private MatchInfo findMatchById(String matchId) {
         return matches.stream().filter(match -> match.id().equals(matchId))
                 .findFirst().
-                orElseThrow(() -> new IllegalArgumentException("Match not found."));
+                orElseThrow(() -> new IllegalArgumentException("Match with id" + matchId + "  not found"));
     }
 
     private boolean checkIsTeamNameAlreadyExist(String teamName) {
