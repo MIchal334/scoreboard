@@ -36,13 +36,19 @@ public class MatchRepositoryInMemory implements MatchRepository {
 
     @Override
     public void removeMatch(String matchId) {
-        MatchInfo info = findMatchById(matchId).get();
-        matches.remove(info);
+        try {
+            MatchInfo info = findMatchById(matchId);
+            matches.remove(info);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error during removing match : " + e.getMessage());
+        }
     }
 
 
-    private Optional<MatchInfo> findMatchById(String matchId) {
-        return matches.stream().filter(match -> match.id().equals(matchId)).findFirst();
+    private MatchInfo findMatchById(String matchId) {
+        return matches.stream().filter(match -> match.id().equals(matchId))
+                .findFirst().
+                orElseThrow(() -> new IllegalArgumentException("Match not found."));
     }
 
     private boolean checkIsTeamNameAlreadyExist(String teamName) {
