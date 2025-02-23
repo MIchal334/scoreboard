@@ -133,7 +133,7 @@ class ScoreboardServiceTest {
         String result = service.updateResultMatch(fakeID, fakeResult);
 
         //THEN
-        assertTrue(result.contains("Failed to updated"));
+        assertTrue(result.contains("Failed to update"));
     }
 
     private List<MatchInfo> crateMatchesList() {

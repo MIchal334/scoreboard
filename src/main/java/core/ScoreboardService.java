@@ -44,7 +44,11 @@ public class ScoreboardService {
 
 
     public String updateResultMatch(String matchID, MatchResult newResult) {
-        matchRepository.updateResult(matchID, newResult);
-        return "Match result updated: " + newResult;
+        try {
+            matchRepository.updateResult(matchID, newResult);
+            return "Match result updated: " + newResult;
+        } catch (Exception e) {
+            return "Failed to update result match: " + e.getMessage();
+        }
     }
 }
