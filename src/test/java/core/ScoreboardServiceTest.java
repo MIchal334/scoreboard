@@ -40,11 +40,11 @@ class ScoreboardServiceTest {
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
         var matchFake = createMatch("H", "aa", "bb", new MatchResult(5, 4));
-        when(matchRepository.crateNewMatch(anyString(),anyString())).thenReturn(matchFake);
+        when(matchRepository.crateNewMatch(anyString(), anyString())).thenReturn(matchFake);
         var service = new ScoreboardService(matchRepository, sortingResultStrategy);
 
         //WHEN
-        String result = service.startNewMatch();
+        String result = service.startNewMatch("h", "b");
 
         //THEN
         assertTrue(result.contains("created"));
