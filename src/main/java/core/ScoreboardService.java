@@ -22,7 +22,11 @@ public class ScoreboardService {
     }
 
     public String startNewMatch(String homeTeamName, String awayTeamName) {
-        MatchInfo match = matchRepository.crateNewMatch(homeTeamName, awayTeamName);
-        return "Match created: " + match.id();
+        try {
+            MatchInfo match = matchRepository.crateNewMatch(homeTeamName, awayTeamName);
+            return "Match created: " + match.id();
+        } catch (Exception e) {
+            return "Failed to start new match: " + e.getMessage();
+        }
     }
 }

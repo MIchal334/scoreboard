@@ -35,7 +35,7 @@ class ScoreboardServiceTest {
     }
 
     @Test
-    public void testStartNewMatchHappyPath() {
+    public void testStartNewMatchHappyPathShouldCreateNewMatch() {
         //GIVEN
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
@@ -48,6 +48,21 @@ class ScoreboardServiceTest {
 
         //THEN
         assertTrue(result.contains("created"));
+    }
+
+    @Test
+    public void testStartNewMatchHappyPathShouldNotCreateNewMatchAndShowInfo() {
+        //GIVEN
+        var matchRepository = Mockito.mock(MatchRepository.class);
+        var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
+        when(matchRepository.crateNewMatch(anyString(), anyString())).thenThrow(new IllegalArgumentException());
+        var service = new ScoreboardService(matchRepository, sortingResultStrategy);
+
+        //WHEN
+        String result = service.startNewMatch("h", "b");
+
+        //THEN
+        assertTrue(result.contains("Failed to start"));
     }
 
     private List<MatchInfo> crateMatchesList() {
