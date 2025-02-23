@@ -12,8 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ScoreboardServiceTest {
 
@@ -52,7 +51,7 @@ class ScoreboardServiceTest {
     }
 
     @Test
-    public void testStartNewMatchHappyPathShouldNotCreateNewMatchAndShowInfo() {
+    public void testStartNewMatchShouldNotCreateNewMatchAndShowInfo() {
         //GIVEN
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);

@@ -29,4 +29,9 @@ public class ScoreboardService {
             return "Failed to start new match: " + e.getMessage();
         }
     }
+
+    public String finishMatch(String matchID) {
+        matchRepository.removeMatch(matchID);
+        return "Match finished: " + matchID;
+    }
 }
