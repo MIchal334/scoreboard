@@ -97,7 +97,7 @@ class ScoreboardServiceTest {
         String result = service.finishMatch(fakeID);
 
         //THEN
-        assertTrue(result.contains("error with stop"));
+        assertTrue(result.contains("Failed to finish"));
     }
 
     private List<MatchInfo> crateMatchesList() {

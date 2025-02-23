@@ -31,7 +31,13 @@ public class ScoreboardService {
     }
 
     public String finishMatch(String matchID) {
-        matchRepository.removeMatch(matchID);
-        return "Match finished: " + matchID;
+        try {
+            matchRepository.removeMatch(matchID);
+            return "Match finished: " + matchID;
+        }catch (Exception e) {
+            return "Failed to finish match: " + e.getMessage();
+        }
+
+
     }
 }
