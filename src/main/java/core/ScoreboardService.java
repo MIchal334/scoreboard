@@ -1,6 +1,10 @@
 package core;
 
 
+import core.model.MatchInfo;
+
+import java.util.List;
+
 public class ScoreboardService {
     private final MatchRepository matchRepository;
     private final SortingResultStrategy sortingResultStrategy;
@@ -11,4 +15,8 @@ public class ScoreboardService {
     }
 
 
+    public List<MatchInfo> getAllCurrentMatches() {
+        List<MatchInfo> currentMatches = matchRepository.findAll();
+        return sortingResultStrategy.sortMatches(currentMatches);
+    }
 }

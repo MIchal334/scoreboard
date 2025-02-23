@@ -5,7 +5,6 @@ import core.model.MatchInfo;
 import core.model.MatchResult;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -25,7 +24,7 @@ public class MatchRepositoryInMemory implements MatchRepository {
     }
 
     @Override
-    public Collection<MatchInfo> findAll() {
+    public List<MatchInfo> findAll() {
         return matches;
     }
 
