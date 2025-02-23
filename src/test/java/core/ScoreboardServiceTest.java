@@ -100,6 +100,24 @@ class ScoreboardServiceTest {
         assertTrue(result.contains("Failed to finish"));
     }
 
+
+    @Test
+    public void testUpdateResultHappyPathShouldUpdateAndShowInfo() {
+        //GIVEN
+        var matchRepository = Mockito.mock(MatchRepository.class);
+        var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
+        var fakeID = "fakeID";
+        var fakeResult = new MatchResult(5, 4);
+        doNothing().when(matchRepository).updateResult(anyString(),fakeResult);
+        var service = new ScoreboardService(matchRepository, sortingResultStrategy);
+
+        //WHEN
+        String result = service.updateResultMatch(fakeID);
+
+        //THEN
+        assertTrue(result.contains("result updated"));
+    }
+
     private List<MatchInfo> crateMatchesList() {
         var matchHighestResult = createMatch("H", "aa", "bb", new MatchResult(5, 4));
         var matchMiddleResult = createMatch("M", "cc", "dd", new MatchResult(7, 2));
