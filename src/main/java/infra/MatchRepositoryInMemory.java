@@ -14,18 +14,13 @@ public class MatchRepositoryInMemory implements MatchRepository {
 
 
     @Override
-    public MatchInfo crateNewMatch(String homeTeamName, String awayTeamName) {
-        try {
-            if (checkIsTeamNameAlreadyExist(homeTeamName) || checkIsTeamNameAlreadyExist(awayTeamName)) {
-                throw new IllegalArgumentException("Team name already exist.");
-            }
-            MatchInfo match = MatchInfo.create(homeTeamName, awayTeamName);
-            matches.add(match);
-            return match;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error during creating match : " + e.getMessage());
-            return null;
+    public MatchInfo crateNewMatch(String homeTeamName, String awayTeamName) throws IllegalArgumentException {
+        if (checkIsTeamNameAlreadyExist(homeTeamName) || checkIsTeamNameAlreadyExist(awayTeamName)) {
+            throw new IllegalArgumentException("Team name already exist.");
         }
+        MatchInfo match = MatchInfo.create(homeTeamName, awayTeamName);
+        matches.add(match);
+        return match;
 
     }
 
@@ -35,26 +30,17 @@ public class MatchRepositoryInMemory implements MatchRepository {
     }
 
     @Override
-    public void removeMatch(String matchId) {
-        try {
-            MatchInfo info = findMatchById(matchId);
-            matches.remove(info);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error during removing match : " + e.getMessage());
-        }
+    public void removeMatch(String matchId) throws IllegalArgumentException {
+        MatchInfo info = findMatchById(matchId);
+        matches.remove(info);
     }
 
     @Override
-    public void updateResult(String id, MatchResult newResult) {
-        try {
-            MatchInfo info = findMatchById(id);
-            MatchInfo newInfo = info.withMatchResult(newResult);
-            removeMatch(id);
-            matches.add(newInfo);
-        }catch (IllegalArgumentException e) {
-            System.out.println("Error during updating match : " + e.getMessage());
-        }
-
+    public void updateResult(String id, MatchResult newResult) throws IllegalArgumentException {
+        MatchInfo info = findMatchById(id);
+        MatchInfo newInfo = info.withMatchResult(newResult);
+        removeMatch(id);
+        matches.add(newInfo);
     }
 
 
