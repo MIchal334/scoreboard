@@ -83,6 +83,22 @@ class ScoreboardServiceTest {
         assertTrue(result.contains("finished"));
     }
 
+    @Test
+    public void testFinishMatchShouldNotFinishMatchAndShowInfo() {
+        //GIVEN
+        var matchRepository = Mockito.mock(MatchRepository.class);
+        var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
+        var fakeID = "fakeID";
+        doThrow(new IllegalArgumentException()).when(matchRepository).removeMatch(anyString());
+        var service = new ScoreboardService(matchRepository, sortingResultStrategy);
+
+
+        //WHEN
+        String result = service.finishMatch(fakeID);
+
+        //THEN
+        assertTrue(result.contains("error with stop"));
+    }
 
     private List<MatchInfo> crateMatchesList() {
         var matchHighestResult = createMatch("H", "aa", "bb", new MatchResult(5, 4));
