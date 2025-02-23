@@ -118,6 +118,24 @@ class ScoreboardServiceTest {
         assertTrue(result.contains("result updated"));
     }
 
+
+    @Test
+    public void testUpdateResultShouldNotUpdateAndShowInfo() {
+        //GIVEN
+        var matchRepository = Mockito.mock(MatchRepository.class);
+        var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
+        var fakeID = "fakeID";
+        var fakeResult = new MatchResult(5, 4);
+        doThrow(new IllegalArgumentException()).when(matchRepository).updateResult(anyString(), any());
+        var service = new ScoreboardService(matchRepository, sortingResultStrategy);
+
+        //WHEN
+        String result = service.updateResultMatch(fakeID, fakeResult);
+
+        //THEN
+        assertTrue(result.contains("Failed to updated"));
+    }
+
     private List<MatchInfo> crateMatchesList() {
         var matchHighestResult = createMatch("H", "aa", "bb", new MatchResult(5, 4));
         var matchMiddleResult = createMatch("M", "cc", "dd", new MatchResult(7, 2));
