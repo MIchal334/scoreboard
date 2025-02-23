@@ -12,6 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 class ScoreboardServiceTest {
@@ -35,7 +36,7 @@ class ScoreboardServiceTest {
     }
 
     @Test
-    public void testStartNewMatchHappyPathShouldCreateNewMatch() {
+    public void testStartNewMatchHappyPathShouldCreateNewMatchAndShowInfo() {
         //GIVEN
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
@@ -63,7 +64,26 @@ class ScoreboardServiceTest {
 
         //THEN
         assertTrue(result.contains("Failed to start"));
+
     }
+
+    @Test
+    public void testFinishMatchHappyPathShouldFinishMatchAndShowInfo() {
+        //GIVEN
+        var matchRepository = Mockito.mock(MatchRepository.class);
+        var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
+        var fakeID = "fakeID";
+        doNothing().when(matchRepository).removeMatch(anyString());
+        var service = new ScoreboardService(matchRepository, sortingResultStrategy);
+
+
+        //WHEN
+        String result = service.finishMatch(fakeID);
+
+        //THEN
+        assertTrue(result.contains("finished"));
+    }
+
 
     private List<MatchInfo> crateMatchesList() {
         var matchHighestResult = createMatch("H", "aa", "bb", new MatchResult(5, 4));
