@@ -1,4 +1,4 @@
-package HighestScoreStrategy;
+package infra;
 
 import core.SortingResultStrategy;
 import core.model.MatchInfo;

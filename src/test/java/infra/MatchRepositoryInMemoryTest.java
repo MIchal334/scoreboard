@@ -1,9 +1,7 @@
-import core.model.MatchResult;
-import infra.MatchRepositoryInMemory;
-import org.junit.jupiter.api.Test;
+package infra;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import core.model.MatchResult;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
