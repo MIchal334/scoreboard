@@ -1,15 +1,13 @@
-import core.model.MatchResult;
-import infra.MatchRepositoryInMemory;
-import org.junit.jupiter.api.Test;
+package infra;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import core.model.MatchResult;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchRepositoryInMemoryTest {
     @Test
-    public void testCreateNewMatchHappyPath() {
+    public void testCreateNewMatchHappyPathShouldAddNewMatch() {
         //GIVEN
         String homeTeamName = "homeTeamName";
         String awayTeamName = "awayTeamName";
@@ -23,7 +21,7 @@ public class MatchRepositoryInMemoryTest {
     }
 
     @Test
-    public void testCreateNewMatchWithSameTeamName() {
+    public void testCreateNewMatchWithSameTeamNameShouldThrowException() {
         //GIVEN
         String homeTeamName = "homeTeamName";
         String awayTeamName = "homeTeamName";
@@ -31,14 +29,17 @@ public class MatchRepositoryInMemoryTest {
 
         // WHEN
         var startAmount = matchRepo.findAll().size();
-        matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        });
         //THEN
         assertEquals(startAmount, matchRepo.findAll().size());
+        assertTrue(exception.getMessage().contains("is impossible"));
     }
 
 
     @Test
-    public void testCreateNewMatchWithNullTeamName() {
+    public void testCreateNewMatchWithNullTeamNameShouldThrowException() {
         //GIVEN
         String homeTeamName = null;
         String awayTeamName = null;
@@ -46,14 +47,17 @@ public class MatchRepositoryInMemoryTest {
 
         // WHEN
         var startAmount = matchRepo.findAll().size();
-        matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        });
         //THEN
         assertEquals(startAmount, matchRepo.findAll().size());
+        assertTrue(exception.getMessage().contains("is impossible"));
     }
 
 
     @Test
-    public void testCreateNewMatchWhenTeamNameExists() {
+    public void testCreateNewMatchWhenTeamNameExistsShouldThrowException() {
         //GIVEN
         String homeTeamName = "homeTeamName";
         String awayTeamName = "awayTeamName";
@@ -62,13 +66,16 @@ public class MatchRepositoryInMemoryTest {
         // WHEN
         var startAmount = matchRepo.findAll().size();
         matchRepo.crateNewMatch(homeTeamName, awayTeamName);
-        matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            matchRepo.crateNewMatch(homeTeamName, awayTeamName);
+        });
         //THEN
         assertEquals(startAmount + 1, matchRepo.findAll().size());
+        assertTrue(exception.getMessage().contains("name already exist"));
     }
 
     @Test
-    public void testRemoveMatchHappyPath() {
+    public void testRemoveMatchHappyPathShouldRemoveMatch() {
         //GIVEN
         String homeTeamName = "homeTeamName";
         String awayTeamName = "awayTeamName";
@@ -83,7 +90,7 @@ public class MatchRepositoryInMemoryTest {
     }
 
     @Test
-    public void testRemoveMatchWithNotExistingMatchId() {
+    public void testRemoveMatchWithNotExistingMatchIdShouldThrowException() {
         //GIVEN
         String homeTeamName = "homeTeamName";
         String awayTeamName = "awayTeamName";
@@ -92,14 +99,17 @@ public class MatchRepositoryInMemoryTest {
 
         // WHEN
         var startAmount = matchRepo.findAll().size();
-        matchRepo.removeMatch("notExistingMatchId");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            matchRepo.removeMatch("notExistingMatchId");
+        });
         //THEN
         assertEquals(startAmount, matchRepo.findAll().size());
+        assertTrue(exception.getMessage().contains("not found"));
     }
 
 
     @Test
-    public void testUpdateMatchResultHappyPath() {
+    public void testUpdateMatchResultHappyPathShouldUpdateMatchResult() {
         //GIVEN
         String homeTeamName = "homeTeamName";
         String awayTeamName = "awayTeamName";
@@ -120,7 +130,7 @@ public class MatchRepositoryInMemoryTest {
 
 
     @Test
-    public void testUpdateWithNotExistingMatchId() {
+    public void testUpdateWithNotExistingMatchIdShouldThrowException() {
         //GIVEN
         int homeScore = 1;
         int awayScore = 1;
@@ -128,17 +138,17 @@ public class MatchRepositoryInMemoryTest {
         var newResult = new MatchResult(homeScore, awayScore);
 
         // WHEN
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        matchRepo.updateResult("id", newResult);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            matchRepo.updateResult("notExistingMatchId", newResult);
+        });
 
         //THEN
-        assertTrue(outContent.toString().toLowerCase().contains("not found"));
+        assertTrue(exception.getMessage().contains("not found"));
     }
 
 
     @Test
-    public void testUpdateMatchResultResultBelowZero() {
+    public void testUpdateMatchResultResultBelowZeroShouldThrowExceptionAndNoChangeResult() {
         //GIVEN
         String homeTeamName = "homeTeamName";
         String awayTeamName = "awayTeamName";
@@ -150,18 +160,23 @@ public class MatchRepositoryInMemoryTest {
         var matchInfo = matchRepo.crateNewMatch(homeTeamName, awayTeamName);
         var firstResult = new MatchResult(homeScoreFirst, awayScoreFirst);
         var secondResult = new MatchResult(homeScoreSecond, awayScoreSecond);
+
         // WHEN
         matchRepo.updateResult(matchInfo.id(), firstResult);
-        matchRepo.updateResult(matchInfo.id(), secondResult);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            matchRepo.updateResult(matchInfo.id(), secondResult);
+        });
+
         var currentInfo = matchRepo.findAll().stream().filter(match -> match.id().equals(matchInfo.id())).findFirst().get();
 
         //THEN
         assertEquals(awayScoreFirst, currentInfo.matchResult().awayTeamScore());
         assertEquals(homeScoreFirst, currentInfo.matchResult().homeTeamScore());
+        assertTrue(exception.getMessage().contains("should be above 0"));
     }
 
     @Test
-    public void testFindAll() {
+    public void testFindAllShouldReturnListOfMatches() {
         //GIVEN
         String homeTeamName1 = "homeTeamName1";
         String awayTeamName1 = "awayTeamName1";

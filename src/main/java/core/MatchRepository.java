@@ -3,14 +3,16 @@ package core;
 import core.model.MatchInfo;
 import core.model.MatchResult;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 public interface MatchRepository {
-    MatchInfo crateNewMatch(String homeTeamName, String awayTeamName);
+    MatchInfo crateNewMatch(String homeTeamName, String awayTeamName) throws IllegalArgumentException;
 
-    Collection<MatchInfo> findAll();
+    List<MatchInfo> findAll();
 
-    void removeMatch(String matchId);
+    void removeMatch(String matchId) throws IllegalArgumentException;
 
-    void updateResult(String id, MatchResult newResult);
+    void updateResult(String id, MatchResult newResult) throws IllegalArgumentException;
 }

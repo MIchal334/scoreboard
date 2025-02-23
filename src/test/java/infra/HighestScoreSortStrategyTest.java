@@ -1,4 +1,5 @@
-import HighestScoreStrategy.HighestScoreSortStrategy;
+package infra;
+
 import core.model.MatchInfo;
 import core.model.MatchResult;
 import org.junit.jupiter.api.Test;
