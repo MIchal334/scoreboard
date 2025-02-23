@@ -2,6 +2,7 @@ package core;
 
 
 import core.model.MatchInfo;
+import core.model.MatchResult;
 
 import java.util.List;
 
@@ -34,10 +35,16 @@ public class ScoreboardService {
         try {
             matchRepository.removeMatch(matchID);
             return "Match finished: " + matchID;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return "Failed to finish match: " + e.getMessage();
         }
 
 
+    }
+
+
+    public String updateResultMatch(String matchID, MatchResult newResult) {
+        matchRepository.updateResult(matchID, newResult);
+        return "Match result updated: " + newResult;
     }
 }

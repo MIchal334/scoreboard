@@ -108,11 +108,11 @@ class ScoreboardServiceTest {
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
         var fakeID = "fakeID";
         var fakeResult = new MatchResult(5, 4);
-        doNothing().when(matchRepository).updateResult(anyString(),fakeResult);
+        doNothing().when(matchRepository).updateResult(anyString(), any());
         var service = new ScoreboardService(matchRepository, sortingResultStrategy);
 
         //WHEN
-        String result = service.updateResultMatch(fakeID);
+        String result = service.updateResultMatch(fakeID, fakeResult);
 
         //THEN
         assertTrue(result.contains("result updated"));
