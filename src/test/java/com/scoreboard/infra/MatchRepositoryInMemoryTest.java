@@ -1,6 +1,7 @@
-package infra;
+package com.scoreboard.infra;
 
-import core.model.MatchResult;
+import com.scoreboard.core.model.MatchResult;
+import com.scoreboard.infra.MatchRepositoryInMemory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

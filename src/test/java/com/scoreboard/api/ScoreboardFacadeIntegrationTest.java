@@ -1,12 +1,13 @@
-package api;
+package com.scoreboard.api;
 
-import core.MatchRepository;
-import core.ScoreboardService;
-import core.SortingResultStrategy;
-import core.model.MatchInfo;
-import core.model.MatchResult;
-import infra.HighestScoreSortStrategy;
-import infra.MatchRepositoryInMemory;
+import com.scoreboard.api.ScoreboardFacade;
+import com.scoreboard.core.MatchRepository;
+import com.scoreboard.core.ScoreboardService;
+import com.scoreboard.core.SortingResultStrategy;
+import com.scoreboard.core.model.MatchInfo;
+import com.scoreboard.core.model.MatchResult;
+import com.scoreboard.infra.HighestScoreSortStrategy;
+import com.scoreboard.infra.MatchRepositoryInMemory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

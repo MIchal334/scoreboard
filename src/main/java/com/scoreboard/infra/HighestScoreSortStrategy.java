@@ -1,9 +1,8 @@
-package infra;
+package com.scoreboard.infra;
 
-import core.SortingResultStrategy;
-import core.model.MatchInfo;
+import com.scoreboard.core.SortingResultStrategy;
+import com.scoreboard.core.model.MatchInfo;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

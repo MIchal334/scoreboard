@@ -1,10 +1,10 @@
-package api;
+package com.scoreboard.api;
 
-import core.MatchRepository;
-import core.ScoreboardService;
-import core.SortingResultStrategy;
-import infra.HighestScoreSortStrategy;
-import infra.MatchRepositoryInMemory;
+import com.scoreboard.core.MatchRepository;
+import com.scoreboard.core.ScoreboardService;
+import com.scoreboard.core.SortingResultStrategy;
+import com.scoreboard.infra.HighestScoreSortStrategy;
+import com.scoreboard.infra.MatchRepositoryInMemory;
 
 public class ScoreboardFactory {
     public static ScoreboardFacade create() {

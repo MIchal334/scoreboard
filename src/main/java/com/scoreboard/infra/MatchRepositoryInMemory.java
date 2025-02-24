@@ -1,8 +1,8 @@
-package infra;
+package com.scoreboard.infra;
 
-import core.MatchRepository;
-import core.model.MatchInfo;
-import core.model.MatchResult;
+import com.scoreboard.core.MatchRepository;
+import com.scoreboard.core.model.MatchInfo;
+import com.scoreboard.core.model.MatchResult;
 
 import java.util.ArrayList;
 import java.util.List;

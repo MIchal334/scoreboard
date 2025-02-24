@@ -1,8 +1,8 @@
-package core;
+package com.scoreboard.core;
 
 
-import core.model.MatchInfo;
-import core.model.MatchResult;
+import com.scoreboard.core.model.MatchInfo;
+import com.scoreboard.core.model.MatchResult;
 
 import java.util.List;
 
