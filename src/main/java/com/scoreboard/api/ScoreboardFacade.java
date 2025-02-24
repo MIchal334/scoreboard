@@ -1,15 +1,15 @@
-package api;
+package com.scoreboard.api;
 
-import core.ScoreboardService;
-import core.model.MatchInfo;
-import core.model.MatchResult;
+import com.scoreboard.core.ScoreboardService;
+import com.scoreboard.core.model.MatchInfo;
+import com.scoreboard.core.model.MatchResult;
 
 import java.util.List;
 
 public class ScoreboardFacade {
     private final ScoreboardService scoreboardService;
 
-    public ScoreboardFacade(ScoreboardService scoreboardService) {
+    ScoreboardFacade(ScoreboardService scoreboardService) {
         this.scoreboardService = scoreboardService;
     }
 

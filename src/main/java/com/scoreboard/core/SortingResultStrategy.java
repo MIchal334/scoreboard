@@ -1,6 +1,6 @@
-package core;
+package com.scoreboard.core;
 
-import core.model.MatchInfo;
+import com.scoreboard.core.model.MatchInfo;
 
 import java.util.List;
 

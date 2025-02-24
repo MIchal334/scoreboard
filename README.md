@@ -11,7 +11,7 @@ developed for a sports data company to ensure fast and easy access to match resu
     - [Application Structure](#application-structure)
     - [Key Components](#key-components)
     - [Architecture Diagram](#architecture-diagram)
-- [Installation and Setup](#installation-and-setup)
+- [Installation](#installation-and-setup)
 - [Usage Examples](#usage-examples)
 
 ## Introduction
@@ -53,3 +53,44 @@ strategy without modifying the core logic.
 Below is a visual representation of the application's architecture:
 
 ![Scoreboard Library Schema](docs/scoreboard_library_schema.png)
+
+## Installation
+
+To use the **Scoreboard** library in your project, add the following dependencies and repository to your `pom.xml`:
+
+```xml
+
+    <dependency>
+        <groupId>com.scoreboard</groupId>
+        <artifactId>scoreboard</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+
+    <repository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/MIchal334/scoreboard</url>
+    </repository>
+````
+## Usage Examples
+
+Example of basic usage of the match management library:
+
+```java
+// Create a scoreboard instance
+ScoreboardFacade scoreboardFacade = ScoreboardFactory.create();
+
+// Start new matches
+scoreboardFacade.startNewMatch("T1", "T2");     // Start a match between team T1 and T2
+scoreboardFacade.startNewMatch("T5", "T3");     // Start another match between team T5 and T3
+
+// Update match results
+scoreboardFacade.updateResult(1, new MatchResult(1, 2));  // Set the score for the first match (T1 vs T2)
+scoreboardFacade.updateResult(2, new MatchResult(3, 1));  // Set the score for the second match (T5 vs T3)
+
+// Display all ongoing matches
+System.out.println(scoreboardFacade.getOnGoingMatches());
+
+// Finish a match
+scoreboardFacade.finishMatch(2);                    // End the second match
+````

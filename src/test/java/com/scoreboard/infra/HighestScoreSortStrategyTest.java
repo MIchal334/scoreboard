@@ -1,7 +1,8 @@
-package infra;
+package com.scoreboard.infra;
 
-import core.model.MatchInfo;
-import core.model.MatchResult;
+import com.scoreboard.core.model.MatchInfo;
+import com.scoreboard.core.model.MatchResult;
+import com.scoreboard.infra.HighestScoreSortStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

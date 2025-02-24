@@ -1,4 +1,4 @@
-package core.model;
+package com.scoreboard.core.model;
 
 
 public record MatchInfo(
