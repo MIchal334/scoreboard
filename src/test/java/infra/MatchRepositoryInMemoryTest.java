@@ -100,7 +100,7 @@ public class MatchRepositoryInMemoryTest {
         // WHEN
         var startAmount = matchRepo.findAll().size();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            matchRepo.removeMatch("notExistingMatchId");
+            matchRepo.removeMatch(12);
         });
         //THEN
         assertEquals(startAmount, matchRepo.findAll().size());
@@ -121,7 +121,7 @@ public class MatchRepositoryInMemoryTest {
 
         // WHEN
         matchRepo.updateResult(matchInfo.id(), newResult);
-        var currentInfo = matchRepo.findAll().stream().filter(match -> match.id().equals(matchInfo.id())).findFirst().get();
+        var currentInfo = matchRepo.findAll().stream().filter(match -> match.id() == matchInfo.id()).findFirst().get();
 
         //THEN
         assertEquals(awayScore, currentInfo.matchResult().awayTeamScore());
@@ -139,7 +139,7 @@ public class MatchRepositoryInMemoryTest {
 
         // WHEN
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            matchRepo.updateResult("notExistingMatchId", newResult);
+            matchRepo.updateResult(1233, newResult);
         });
 
         //THEN
@@ -167,7 +167,7 @@ public class MatchRepositoryInMemoryTest {
             matchRepo.updateResult(matchInfo.id(), secondResult);
         });
 
-        var currentInfo = matchRepo.findAll().stream().filter(match -> match.id().equals(matchInfo.id())).findFirst().get();
+        var currentInfo = matchRepo.findAll().stream().filter(match -> match.id() == matchInfo.id()).findFirst().get();
 
         //THEN
         assertEquals(awayScoreFirst, currentInfo.matchResult().awayTeamScore());

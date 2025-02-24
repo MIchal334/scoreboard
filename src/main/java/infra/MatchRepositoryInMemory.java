@@ -29,13 +29,13 @@ public class MatchRepositoryInMemory implements MatchRepository {
     }
 
     @Override
-    public void removeMatch(String matchId) throws IllegalArgumentException {
+    public void removeMatch(int matchId) throws IllegalArgumentException {
         MatchInfo info = findMatchById(matchId);
         matches.remove(info);
     }
 
     @Override
-    public void updateResult(String id, MatchResult newResult) throws IllegalArgumentException {
+    public void updateResult(int id, MatchResult newResult) throws IllegalArgumentException {
         MatchInfo info = findMatchById(id);
         MatchInfo newInfo = info.withMatchResult(newResult);
         removeMatch(id);
@@ -43,8 +43,8 @@ public class MatchRepositoryInMemory implements MatchRepository {
     }
 
 
-    private MatchInfo findMatchById(String matchId) {
-        return matches.stream().filter(match -> match.id().equals(matchId))
+    private MatchInfo findMatchById(int matchId) {
+        return matches.stream().filter(match -> match.id() == matchId)
                 .findFirst().
                 orElseThrow(() -> new IllegalArgumentException("Match with id " + matchId + "  not found"));
     }

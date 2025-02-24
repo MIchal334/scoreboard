@@ -1,14 +1,13 @@
 package core.model;
 
 
-import java.util.UUID;
-
 public record MatchInfo(
-        String id,
+        int id,
         String homeTeamName,
         String awayTeamName,
         MatchResult matchResult
 ) {
+    private static int currentId;
 
     public MatchInfo {
         if (homeTeamName == null || homeTeamName.trim().isEmpty() ||
@@ -20,8 +19,9 @@ public record MatchInfo(
 
     public static MatchInfo create(String homeTeamName, String awayTeamName) {
         try {
+            currentId++;
             return new MatchInfo(
-                    UUID.randomUUID().toString(),
+                    currentId,
                     homeTeamName,
                     awayTeamName,
                     new MatchResult(0, 0)

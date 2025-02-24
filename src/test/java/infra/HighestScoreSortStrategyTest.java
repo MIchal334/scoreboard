@@ -12,9 +12,9 @@ public class HighestScoreSortStrategyTest {
     @Test
     public void testSortHighestScoreStrategy() {
         //GIVEN
-        var matchHighestResult = createMatch("H", "aa", "bb", new MatchResult(5, 4));
-        var matchMiddleResult = createMatch("M", "cc", "dd", new MatchResult(7, 2));
-        var matchLowScore = createMatch("L", "ee", "ff", new MatchResult(1, 0));
+        var matchHighestResult = createMatch(1, "aa", "bb", new MatchResult(5, 4));
+        var matchMiddleResult = createMatch(2, "cc", "dd", new MatchResult(6, 2));
+        var matchLowScore = createMatch(3, "ee", "ff", new MatchResult(1, 0));
         List<MatchInfo> matchList = List.of(matchMiddleResult, matchHighestResult, matchLowScore);
         var sortStrategy = new HighestScoreSortStrategy();
 
@@ -28,7 +28,7 @@ public class HighestScoreSortStrategyTest {
 
     }
 
-    private MatchInfo createMatch(String id, String homeTeamName, String awayTeamName, MatchResult matchResult) {
+    private MatchInfo createMatch(int id, String homeTeamName, String awayTeamName, MatchResult matchResult) {
         return new MatchInfo(id, homeTeamName, awayTeamName, matchResult);
     }
 
