@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,11 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ScoreboardFacadeIntegrationTest {
     private ScoreboardFacade scoreboardFacade;
     private MatchRepository matchRepository;
-    private static int currentId;
 
     @BeforeEach
     void setUp() {
-        currentId = 0;
         matchRepository = new MatchRepositoryInMemory();
         SortingResultStrategy sortingResultStrategy = new HighestScoreSortStrategy();
         ScoreboardService scoreboardService = new ScoreboardService(matchRepository, sortingResultStrategy);
@@ -62,25 +59,39 @@ class ScoreboardFacadeIntegrationTest {
 
     @Test
     void testShowSortedMatches() {
+        List<MatchInfo> sortedList = crateMatchInRepo();
 
+        List<MatchInfo> result = scoreboardFacade.getOnGoingMatches();
 
+        assertEquals(sortedList.size(), result.size());
+        assertEquals(sortedList, result);
     }
 
-//    private List<MatchInfo> getListToSortAndResult() {
-//        List<MatchInfo> matchInfoListToSort = new ArrayList<>();
-//        List<MatchInfo> matchInfoListCorrectResult = new ArrayList<>();
-//
-//        MatchInfo matchWithResult5 = crateMatchInfo("Mexico", "Canada", new MatchResult(0, 5));
-//        MatchInfo matchWithResult12Older = crateMatchInfo("Spain", "Brazil", new MatchResult(10, 2));
-//        MatchInfo matchWithResult4 = crateMatchInfo("Germany", "France", new MatchResult(2, 2));
-//        MatchInfo matchWithResult12 = crateMatchInfo("Uruguay", "Italy", new MatchResult(2, 2));
-//
-//
-//    }
+
+    private List<MatchInfo> crateMatchInRepo() {
+        List<MatchInfo> matchInfoListCorrectResult = new ArrayList<>();
+
+        MatchInfo matchWithResult5 = crateMatchInfo("Mexico", "Canada", new MatchResult(0, 5));
+        MatchInfo matchWithResult12Older = crateMatchInfo("Spain", "Brazil", new MatchResult(10, 2));
+        MatchInfo matchWithResult4Older = crateMatchInfo("Germany", "France", new MatchResult(2, 2));
+        MatchInfo matchWithResult12 = crateMatchInfo("Uruguay", "Italy", new MatchResult(2, 2));
+        MatchInfo matchWithResult4 = crateMatchInfo("Argentina", "Australia", new MatchResult(3, 1));
+
+
+        matchInfoListCorrectResult.add(matchWithResult12);
+        matchInfoListCorrectResult.add(matchWithResult12Older);
+        matchInfoListCorrectResult.add(matchWithResult5);
+        matchInfoListCorrectResult.add(matchWithResult4);
+        matchInfoListCorrectResult.add(matchWithResult4Older);
+
+
+        return matchInfoListCorrectResult;
+    }
 
     private MatchInfo crateMatchInfo(String homeTeamName, String awayTeamName, MatchResult currentMatchResult) {
-        currentId++;
-        return new MatchInfo(currentId, homeTeamName, awayTeamName, currentMatchResult);
+        MatchInfo match = matchRepository.crateNewMatch(homeTeamName, awayTeamName);
+        matchRepository.updateResult(match.id(), currentMatchResult);
+        return matchRepository.findAll().stream().filter(m -> m.id() == match.id()).findFirst().get();
     }
 
 }
