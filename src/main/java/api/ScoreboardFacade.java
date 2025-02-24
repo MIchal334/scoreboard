@@ -1,7 +1,10 @@
 package api;
 
 import core.ScoreboardService;
+import core.model.MatchInfo;
 import core.model.MatchResult;
+
+import java.util.List;
 
 public class ScoreboardFacade {
     private final ScoreboardService scoreboardService;
@@ -20,5 +23,9 @@ public class ScoreboardFacade {
 
     public String finishMatch(int matchId) {
         return scoreboardService.finishMatch(matchId);
+    }
+
+    public List<MatchInfo> getOnGoingMatches() {
+        return scoreboardService.getAllCurrentMatches();
     }
 }

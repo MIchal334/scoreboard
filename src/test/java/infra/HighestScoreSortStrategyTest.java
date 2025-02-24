@@ -13,7 +13,7 @@ public class HighestScoreSortStrategyTest {
     public void testSortHighestScoreStrategy() {
         //GIVEN
         var matchHighestResult = createMatch(1, "aa", "bb", new MatchResult(5, 4));
-        var matchMiddleResult = createMatch(2, "cc", "dd", new MatchResult(7, 2));
+        var matchMiddleResult = createMatch(2, "cc", "dd", new MatchResult(6, 2));
         var matchLowScore = createMatch(3, "ee", "ff", new MatchResult(1, 0));
         List<MatchInfo> matchList = List.of(matchMiddleResult, matchHighestResult, matchLowScore);
         var sortStrategy = new HighestScoreSortStrategy();

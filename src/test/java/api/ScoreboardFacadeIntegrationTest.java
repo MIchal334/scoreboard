@@ -74,7 +74,7 @@ class ScoreboardFacadeIntegrationTest {
         MatchInfo matchWithResult5 = crateMatchInfo("Mexico", "Canada", new MatchResult(0, 5));
         MatchInfo matchWithResult12Older = crateMatchInfo("Spain", "Brazil", new MatchResult(10, 2));
         MatchInfo matchWithResult4Older = crateMatchInfo("Germany", "France", new MatchResult(2, 2));
-        MatchInfo matchWithResult12 = crateMatchInfo("Uruguay", "Italy", new MatchResult(2, 2));
+        MatchInfo matchWithResult12 = crateMatchInfo("Uruguay", "Italy", new MatchResult(6, 6));
         MatchInfo matchWithResult4 = crateMatchInfo("Argentina", "Australia", new MatchResult(3, 1));
 
 
