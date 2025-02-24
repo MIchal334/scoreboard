@@ -31,7 +31,7 @@ public class ScoreboardService {
         }
     }
 
-    public String finishMatch(String matchID) {
+    public String finishMatch(int matchID) {
         try {
             matchRepository.removeMatch(matchID);
             return "Match finished: " + matchID;
@@ -43,7 +43,7 @@ public class ScoreboardService {
     }
 
 
-    public String updateResultMatch(String matchID, MatchResult newResult) {
+    public String updateResultMatch(int matchID, MatchResult newResult) {
         try {
             matchRepository.updateResult(matchID, newResult);
             return "Match result updated: " + newResult;

@@ -39,7 +39,7 @@ class ScoreboardServiceTest {
         //GIVEN
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
-        var matchFake = createMatch("H", "aa", "bb", new MatchResult(5, 4));
+        var matchFake = createMatch(1, "aa", "bb", new MatchResult(5, 4));
         when(matchRepository.crateNewMatch(anyString(), anyString())).thenReturn(matchFake);
         var service = new ScoreboardService(matchRepository, sortingResultStrategy);
 
@@ -71,8 +71,8 @@ class ScoreboardServiceTest {
         //GIVEN
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
-        var fakeID = "fakeID";
-        doNothing().when(matchRepository).removeMatch(anyString());
+        var fakeID = 1221;
+        doNothing().when(matchRepository).removeMatch(anyInt());
         var service = new ScoreboardService(matchRepository, sortingResultStrategy);
 
 
@@ -88,8 +88,8 @@ class ScoreboardServiceTest {
         //GIVEN
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
-        var fakeID = "fakeID";
-        doThrow(new IllegalArgumentException()).when(matchRepository).removeMatch(anyString());
+        var fakeID = 2132;
+        doThrow(new IllegalArgumentException()).when(matchRepository).removeMatch(anyInt());
         var service = new ScoreboardService(matchRepository, sortingResultStrategy);
 
 
@@ -106,9 +106,9 @@ class ScoreboardServiceTest {
         //GIVEN
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
-        var fakeID = "fakeID";
+        var fakeID = 123;
         var fakeResult = new MatchResult(5, 4);
-        doNothing().when(matchRepository).updateResult(anyString(), any());
+        doNothing().when(matchRepository).updateResult(anyInt(), any());
         var service = new ScoreboardService(matchRepository, sortingResultStrategy);
 
         //WHEN
@@ -124,9 +124,9 @@ class ScoreboardServiceTest {
         //GIVEN
         var matchRepository = Mockito.mock(MatchRepository.class);
         var sortingResultStrategy = Mockito.mock(SortingResultStrategy.class);
-        var fakeID = "fakeID";
+        var fakeID = 123;
         var fakeResult = new MatchResult(5, 4);
-        doThrow(new IllegalArgumentException()).when(matchRepository).updateResult(anyString(), any());
+        doThrow(new IllegalArgumentException()).when(matchRepository).updateResult(anyInt(), any());
         var service = new ScoreboardService(matchRepository, sortingResultStrategy);
 
         //WHEN
@@ -137,14 +137,14 @@ class ScoreboardServiceTest {
     }
 
     private List<MatchInfo> crateMatchesList() {
-        var matchHighestResult = createMatch("H", "aa", "bb", new MatchResult(5, 4));
-        var matchMiddleResult = createMatch("M", "cc", "dd", new MatchResult(7, 2));
-        var matchLowScore = createMatch("L", "ee", "ff", new MatchResult(1, 0));
+        var matchHighestResult = createMatch(1, "aa", "bb", new MatchResult(5, 4));
+        var matchMiddleResult = createMatch(2, "cc", "dd", new MatchResult(7, 2));
+        var matchLowScore = createMatch(3, "ee", "ff", new MatchResult(1, 0));
         return List.of(matchHighestResult, matchMiddleResult, matchLowScore);
     }
 
 
-    private MatchInfo createMatch(String id, String homeTeamName, String awayTeamName, MatchResult matchResult) {
+    private MatchInfo createMatch(int id, String homeTeamName, String awayTeamName, MatchResult matchResult) {
         return new MatchInfo(id, homeTeamName, awayTeamName, matchResult);
     }
 

@@ -12,7 +12,7 @@ public interface MatchRepository {
 
     List<MatchInfo> findAll();
 
-    void removeMatch(String matchId) throws IllegalArgumentException;
+    void removeMatch(int matchId) throws IllegalArgumentException;
 
-    void updateResult(String id, MatchResult newResult) throws IllegalArgumentException;
+    void updateResult(int id, MatchResult newResult) throws IllegalArgumentException;
 }
